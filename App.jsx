@@ -6,21 +6,23 @@ import dp from './assets/dp.jpg';
 import { useState } from 'react';
 import dataJson from './data.json';
 
-import React from 'react';
-import PDFView from 'react-native-view-pdf';
+import thing0 from './assets/0.jpg';
+import thing1 from './assets/1.jpg';
+import thing2 from './assets/2.jpg';
 
+import React from 'react';
 
 const Stack = createNativeStackNavigator();
 
 function App() {
     return (
         <>
-            {/* <PDFExample /> */}
+            {/* <PdfViewer /> */}
             <NavigationContainer>
                 <Stack.Navigator>
                     <Stack.Screen name="Login" component={Login} />
                     <Stack.Screen name="Home" component={Home} />
-                    {/* <Stack.Screen name="PDF" component={PDFViewComponent} /> */}
+                    <Stack.Screen name="PdfViewer" component={PdfViewer} />
                 </Stack.Navigator>
             </NavigationContainer>
         </>
@@ -30,8 +32,6 @@ function App() {
 function Login({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-
 
     const handleLogin = () => {
         let flag = false;
@@ -93,13 +93,11 @@ function Home({ navigation }) {
                                 <Button
                                     style={styles.databtn}
                                     key={(key) * 100}
-                                    title={dataJson.data[user(null)].data[index].pdf}
+                                    title={"pdf"}
                                     onPress={() => {
-                                        log(dataJson.data[user(null)].data[index].pdf);
-                                        navigation.navigate('PDF');
+                                        navigation.navigate('PdfViewer', { pdfnum: index });
                                     }}
                                 >
-
                                 </Button>
                             </View>
                         </View>
@@ -113,23 +111,156 @@ function Home({ navigation }) {
 
 
 
+function PdfViewer({ navigation, route }) {
 
+    const style = {
+        pdf: {
+            flex: 1,
+        },
+        top: {
+            height: 200,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            borderWidth: 1,
+            borderColor: 'black',
+            borderStyle: 'solid',
+        },
+        csr: {
+            height: '100%',
+            width: '40%',
+            flexDirection: 'column',
+            justifyContent: 'space-around',
+            padding: 20,
+            gap: 10,
+            backgroundColor: 'pink',
+        },
+        csrtext: {
+            fontSize: 20,
+            fontWeight: 'bold',
+        },
+        pd: {
+            height: '100%',
+            width: '60%',
+            justifyContent: 'space-around',
+            padding: 5,
+            flexDirection: 'column',
+            gap: 10,
+            backgroundColor: 'purple'
+        },
+        ashw: {
+            flexDirection: 'row',
+            gap: 10,
+        },
+        graph: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            padding: 10,
+            margin: 5,
+            borderWidth: 1,
+            borderColor: 'black',
+            borderStyle: 'solid',
+            backgroundColor: 'lightgrey',
+        },
+        pdh: {
+            flexDirection: 'column',
+        },
+        pdhh: {
+            fontSize: 20,
+            fontWeight: 'bold',
+        },
+        text: {
+            fontSize: 15,
+        },
+        image: {
+            height: 200,
+            width: 400,
+            margin: 10,
+        },
+        heading: {
+            fontSize: 35,
+            fontWeight: 'bold',
+        },
+    };
 
+    const pdfnum = route.params.pdfnum;
 
+    const thing = [thing0, thing1, thing2];
 
-
-function PDFExample() {
-    const url = 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf';
     return (
-        <View style={{ flex: 1 }}>
-            {/* Some Controls to change PDF resource */}
-            <PDFView
-                style={{ flex: 1 }}
-                resource={url}
-                resourceType={url}
-                onLoad={() => console.log(`PDF rendered from ${resourceType}`)}
-                onError={(error) => console.log('Cannot render PDF', error)}
-            />
+        <View style={style.pdf}>
+            <View style={style.top}>
+                <View style={style.csr}>
+                    <Text style={style.csrtext}>COGNITIVE</Text>
+                    <Text style={style.csrtext}>STATE</Text>
+                    <Text style={style.csrtext}>REPORT</Text>
+                </View>
+                <View style={style.pd}>
+                    <Text style={style.pdhh}>Patient Name</Text>
+                    <Text style={style.text}>{dataJson.data[user(null)].name}</Text>
+                    <Text style={style.pdhh}>Date Of Examination</Text>
+                    <Text style={style.text}>{dataJson.data[user(null)].data[pdfnum].date}</Text>
+                    <View style={style.ashw}>
+
+
+
+
+                        <View style={style.pdh}>
+                            <Text style={style.pdhh}>Age:</Text>
+                            <Text style={style.text}>{dataJson.data[user(null)].data[pdfnum].age}</Text>
+                        </View>
+                        <View style={style.pdh}>
+                            <Text style={style.pdhh}>Sex:</Text>
+                            <Text style={style.text}>{dataJson.data[user(null)].data[pdfnum].sex}</Text>
+                        </View>
+                        <View style={style.pdh}>
+                            <Text style={style.pdhh}>Height:</Text>
+                            <Text style={style.text}>{dataJson.data[user(null)].data[pdfnum].height}</Text>
+                        </View>
+                        <View style={style.pdh}>
+                            <Text style={style.pdhh}>Weight:</Text>
+                            <Text style={style.text}>{dataJson.data[user(null)].data[pdfnum].weight}</Text>
+                        </View>
+                    </View>
+                </View>
+            </View>
+            <View>
+                <Text style={style.heading}>Brain Wave Content Present</Text>
+                <View>
+                    <View style={style.graph}>
+                        <Text>Alpha</Text>
+                        <Text>{dataJson.data[user(null)].data[pdfnum].alpha}</Text>
+                    </View>
+                    <View style={style.graph}>
+                        <Text>Beta</Text>
+                        <Text>{dataJson.data[user(null)].data[pdfnum].beta}</Text>
+                    </View>
+                    <View style={style.graph}>
+                        <Text>Delta</Text>
+                        <Text>{dataJson.data[user(null)].data[pdfnum].delta}</Text>
+                    </View>
+                    <View style={style.graph}>
+                        <Text>Theta</Text>
+                        <Text>{dataJson.data[user(null)].data[pdfnum].theta}</Text>
+                    </View>
+                </View>
+            </View>
+            <View>
+                <View>
+                    <Text style={style.heading}>Comments</Text>
+                    <Text style={style.text}>{dataJson.data[user(null)].data[pdfnum].comment}</Text>
+                </View>
+                <View>
+                    <Text style={style.heading}>Scale</Text>
+                    <Text style={style.text}>8-13hz = Alpha</Text>
+                    <Text style={style.text}>&#62;13hz = Beta</Text>
+                    <Text style={style.text}>1-4hz = Delta</Text>
+                    <Text style={style.text}>4-8hz = Theta</Text>
+                </View>
+            </View>
+            <View>
+                <Image source={thing[pdfnum]} style={style.image} />
+            </View>
         </View>
     );
 }
@@ -157,8 +288,6 @@ const styles = StyleSheet.create({
     },
     pdf: {
         flex: 1,
-        width: Dimensions.get('window').width,
-        height: Dimensions.get('window').height,
     },
     input: {
         padding: 10,
