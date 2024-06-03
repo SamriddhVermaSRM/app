@@ -37,7 +37,6 @@ function Login({ navigation }) {
         let flag = false;
         dataJson.data.map((key, index) => {
             if (dataJson.data[index].username === email && dataJson.data[index].password === password) {
-                console.log('Logged in');
                 console.log(index);
                 user(index);
                 flag = true;
@@ -201,10 +200,6 @@ function PdfViewer({ navigation, route }) {
                     <Text style={style.pdhh}>Date Of Examination</Text>
                     <Text style={style.text}>{dataJson.data[user(null)].data[pdfnum].date}</Text>
                     <View style={style.ashw}>
-
-
-
-
                         <View style={style.pdh}>
                             <Text style={style.pdhh}>Age:</Text>
                             <Text style={style.text}>{dataJson.data[user(null)].data[pdfnum].age}</Text>
@@ -264,10 +259,6 @@ function PdfViewer({ navigation, route }) {
         </View>
     );
 }
-
-
-
-
 
 
 let random = 0;
